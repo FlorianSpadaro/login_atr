@@ -24,52 +24,68 @@ class MyFormState extends State<MyForm> {
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("LOGIN"),
-      ),
-      body: new Form(
-        key: _formKey,
-        child: new Column(
-          children: <Widget>[
-            new TextField(
-              decoration: new InputDecoration(
-                labelText: "Login"
-              ),
-              controller: loginController,
-            ),
-            new TextField(
-              decoration: new InputDecoration(
-                labelText: "Password"
-              ),
-              controller: passwordController,
-            ),
-            new Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: new RaisedButton(
-                onPressed: (){
-                  if(_formKey.currentState.validate())
-                  {
-                    _dtSource.login(loginController.text, passwordController.text).then((User user){
-                      if(user != null)
+      body: 
+      new Container(
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            image: new AssetImage("assets/images/test.jpg"),
+            fit: BoxFit.cover
+          )
+        ),
+        child: new Padding(
+          padding: new EdgeInsets.symmetric(vertical:0.0,horizontal: 35.0),
+          child: new Form(
+            key: _formKey,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new TextFormField(
+                  autocorrect: false,
+                  decoration: new InputDecoration(
+                    suffixIcon: new Icon(Icons.person),
+                    labelText: "Nom d'utilisateur"
+                  ),
+                  controller: loginController,
+                ),
+                new TextFormField(
+                  obscureText: true,
+                  decoration: new InputDecoration(
+                    suffixIcon: new Icon(Icons.lock),
+                    labelText: "Mot de passe"
+                  ),
+                  controller: passwordController,
+                ),
+                new Container(
+                  padding: const EdgeInsets.symmetric(vertical: 50.0),
+                  child: new RaisedButton(
+                    color: Colors.white,
+                    textColor: Colors.blueGrey,
+                    onPressed: (){
+                      if(_formKey.currentState.validate())
                       {
-                        Singleton _singleton = new Singleton();
-                        _singleton.user = user;
-                        _singleton.getListPoi();
-                        Navigator.of(context).pushReplacementNamed("/home");
+                        _dtSource.login(loginController.text, passwordController.text).then((User user){
+                          if(user != null)
+                          {
+                            Singleton _singleton = new Singleton();
+                            _singleton.user = user;
+                            _singleton.getListPoi();
+                            Navigator.of(context).pushReplacementNamed("/home");
+                          }
+                          else{
+                            print("Identifiants incorrects");
+                          }
+                        });
                       }
-                      else{
-                        print("Identifiants incorrects");
-                      }
-                    });
-                  }
-                },
-                child: new Text('Submit'),
-              ),
+                    },
+                    child: new Text('Se connecter'),
+                  ),
+                )
+              ],
             )
-          ],
+          ),
         )
-      ),
+         
+      )
     );
-
   }
 }
