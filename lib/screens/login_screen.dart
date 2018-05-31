@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_login/data/rest_ds.dart';
 import 'package:test_login/models/user.dart';
+import 'package:test_login/utils/singleton.dart';
 
 class MyForm extends StatefulWidget{
   @override
@@ -65,6 +66,9 @@ class MyFormState extends State<MyForm> {
                         _dtSource.login(loginController.text, passwordController.text).then((User user){
                           if(user != null)
                           {
+                            Singleton _singleton = new Singleton();
+                            _singleton.user = user;
+                            _singleton.getListPoi();
                             Navigator.of(context).pushReplacementNamed("/home");
                           }
                           else{
