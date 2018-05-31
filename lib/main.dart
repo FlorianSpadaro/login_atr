@@ -9,6 +9,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Connexion',
+        theme: new ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.blueGrey,
+        accentColor: Colors.blueGrey,
+      ),
       initialRoute: '/',
       routes: routes,
     );
