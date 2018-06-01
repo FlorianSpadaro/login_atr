@@ -79,7 +79,7 @@ class MyFormState extends State<MyForm> {
                             Singleton _singleton = new Singleton();
                             _singleton.user = user;
                             _singleton.getListPoi();
-                            Navigator.of(context).pushReplacementNamed("/home");
+                            Navigator.of(context).pushReplacementNamed("/startMenu");
                           }
                           else{
                             loadingLoader = new Text("Identifiants incorrects");
