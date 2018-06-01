@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_login/utils/singleton.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:test_login/utils/poi_singleton.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -14,8 +15,7 @@ class HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context){
-    return new MaterialApp(
-      home: new DefaultTabController(
+    return new DefaultTabController(
         length: 3,
         child: new Scaffold(
           appBar: new AppBar(
@@ -38,7 +38,11 @@ class HomeScreenState extends State<HomeScreen>{
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           new ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              PoiSingleton poiSingleton = new PoiSingleton();
+                              poiSingleton.poi = singleton.listPoi[index];
+                              Navigator.of(context).pushNamed("/detailsPoi");
+                            },
                             leading: const Icon(Icons.fiber_new,
                             color: Colors.green,),
                             title: new Text(singleton.listPoi[index].ftNumeroOeie),
@@ -73,8 +77,7 @@ class HomeScreenState extends State<HomeScreen>{
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
