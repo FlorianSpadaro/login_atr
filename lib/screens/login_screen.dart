@@ -57,9 +57,12 @@ class MyFormState extends State<MyForm> {
                 ),
                 new Container(
                   padding: const EdgeInsets.symmetric(vertical: 50.0),
-                  child: new RaisedButton(
-                    color: Colors.white,
-                    textColor: Colors.blueGrey,
+                  child: new OutlineButton(
+                    borderSide: BorderSide(color: Colors.grey,width: 2.0),
+                    highlightColor: Colors.green,
+                    color: Colors.greenAccent,
+                    splashColor: Colors.green,
+                    highlightedBorderColor: Colors.green[800],
                     onPressed: (){
                       if(_formKey.currentState.validate())
                       {
