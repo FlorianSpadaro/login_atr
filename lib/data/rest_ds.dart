@@ -8,11 +8,11 @@ class RestDatasource {
   NetworkUtil _netUtil = new NetworkUtil();
 
   //API BDC
-  static final baseUrlBdc = "http://192.168.30.218/bdc/API";
+  static final baseUrlBdc = "http://192.168.30.49:8080/Projet%20Stage%202.0/API";
   static final loginUrl = baseUrlBdc + "/connexion.php";
 
   //API Map_affectation
-  static final baseUrlMapAffect = "http://192.168.30.218/map_affectation/API";
+  static final baseUrlMapAffect = "http://192.168.30.49:8080/map_affectation/API";
   static final listePoiUserUrl = baseUrlMapAffect + "/getPoiAffecteByCaff.php";
 
   Future<User> login(String username, String password){
