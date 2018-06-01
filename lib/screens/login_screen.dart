@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test_login/data/rest_ds.dart';
 import 'package:test_login/models/user.dart';
 import 'package:test_login/utils/singleton.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
 
 class MyForm extends StatefulWidget{
   @override
@@ -19,7 +21,7 @@ class MyFormState extends State<MyForm> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final loginController = new TextEditingController();
   final passwordController = new TextEditingController();
-
+  var loadingLoader;
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
@@ -64,24 +66,32 @@ class MyFormState extends State<MyForm> {
                     splashColor: Colors.green,
                     highlightedBorderColor: Colors.green[800],
                     onPressed: (){
+                      loadingLoader = new CircularProgressIndicator();
                       if(_formKey.currentState.validate())
                       {
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
+                        
                         _dtSource.login(loginController.text, passwordController.text).then((User user){
                           if(user != null)
                           {
+                            
+                            sleep(const Duration(seconds:2));
                             Singleton _singleton = new Singleton();
                             _singleton.user = user;
                             _singleton.getListPoi();
                             Navigator.of(context).pushReplacementNamed("/home");
                           }
                           else{
-                            print("Identifiants incorrects");
+                            loadingLoader = new Text("Identifiants incorrects");
                           }
                         });
                       }
                     },
                     child: new Text('Se connecter'),
                   ),
+                ),
+                new Container(
+                  child: loadingLoader,
                 )
               ],
             )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_login/utils/singleton.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -42,7 +43,7 @@ class HomeScreenState extends State<HomeScreen>{
                             color: Colors.green,),
                             title: new Text(singleton.listPoi[index].ftNumeroOeie),
                             trailing: new Text(singleton.listPoi[index].domaine),
-                            subtitle: new Text(singleton.listPoi[index].id.toString()),
+                            subtitle: new Text(singleton.listPoi[index].address),
                           ),
                           new ButtonTheme.bar( // make buttons use the appropriate styles for cards
                             child: new ButtonBar(
@@ -53,7 +54,9 @@ class HomeScreenState extends State<HomeScreen>{
                                 ),
                                 new FlatButton(
                                   child: const Text('ALLER'),
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    _launchURL(singleton.listPoi[index].address);
+                                  },
                                 ),
                               ],
                             ),
@@ -75,20 +78,11 @@ class HomeScreenState extends State<HomeScreen>{
   }
 }
 
-// class HomeScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     Singleton _singleton = new Singleton();
-
-//     return new Scaffold(
-//       appBar: new AppBar(title: new Text("Home"),),
-//       body: new Center(
-//         child: new Text("Welcome " + _singleton.user.nom + " " + _singleton.user.prenom),
-//       ),
-//     );
-//   }
-
-// }
-
-
-
+_launchURL(String adresse) async {
+  String url = 'https://www.waze.com/ul?q={$adresse}&navigate=yes';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
