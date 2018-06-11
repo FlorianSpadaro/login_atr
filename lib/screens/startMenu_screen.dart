@@ -19,10 +19,23 @@ class StartMenu extends StatelessWidget {
       ),
       new Divider(color: Colors.grey,),
       new ListTile(
-        enabled: false,
+        onTap: () {
+          Navigator.of(context).pushNamed("/kpi");
+        },
+        // enabled: false,
         leading: const Icon(Icons.trending_up,),
         title: new Text("Mes résultats"),
         subtitle: new Text("Indicateurs de production"),
+      ),
+      new Divider(color: Colors.grey,),
+      new ListTile(
+        // enabled: false,
+        leading: const Icon(Icons.gps_fixed),
+        title: new Text("Poi Proxi"),
+        subtitle: new Text("Recherche de POI à proximité"),
+        onTap: () {
+          Navigator.of(context).pushNamed("/poiProxi");
+        },
       ),
       new Divider(color: Colors.grey,),
       new ListTile(

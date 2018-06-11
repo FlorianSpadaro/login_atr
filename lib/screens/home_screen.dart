@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_login/utils/singleton.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:test_login/utils/poi_singleton.dart';
+import 'package:flutter_calendar/flutter_calendar.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget{
 
 class HomeScreenState extends State<HomeScreen>{
   Singleton singleton = new Singleton();
-
+  final date = new DateTime.now();
   @override
   Widget build(BuildContext context){
     return new DefaultTabController(
@@ -52,11 +53,16 @@ class HomeScreenState extends State<HomeScreen>{
                           new ButtonTheme.bar( // make buttons use the appropriate styles for cards
                             child: new ButtonBar(
                               children: <Widget>[
-                                new FlatButton(
-                                  child: const Text('INFO'),
-                                  onPressed: () { /* ... */ },
+                                new OutlineButton(
+                                  child: const Text('PLANIF.'),
+                                  onPressed: (){showDatePicker(
+                                  context: context,
+                                  initialDate: date,
+                                  firstDate: date.subtract(const Duration(days: 1)),
+                                  lastDate: date.add(const Duration(days: 3000))
+                                ).then((DateTime value){print(value.day);print(value.month);print(value.year);});},
                                 ),
-                                new FlatButton(
+                                new OutlineButton(
                                   child: const Text('ALLER'),
                                   onPressed: (){
                                     _launchURL(singleton.listPoi[index].address);
@@ -73,7 +79,12 @@ class HomeScreenState extends State<HomeScreen>{
                 },
               ),
               new Icon(Icons.directions_transit),
-              new Icon(Icons.directions_bike),
+              new Calendar(
+                isExpandable: true,
+                showCalendarPickerIcon: false,
+                onDateSelected: (day){print("ok");},
+                
+              )
             ],
           ),
         ),

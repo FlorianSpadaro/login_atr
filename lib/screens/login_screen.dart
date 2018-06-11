@@ -71,7 +71,8 @@ class MyFormState extends State<MyForm> {
                       {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
                         
-                        _dtSource.login(loginController.text, passwordController.text).then((User user){
+                        // _dtSource.login(loginController.text, passwordController.text).then((User user){
+                        _dtSource.login("SIMDEL", "SIMDEL").then((User user){  //Pour dev
                           if(user != null)
                           {
                             
@@ -92,7 +93,7 @@ class MyFormState extends State<MyForm> {
                 ),
                 new Container(
                   child: loadingLoader,
-                )
+                ),
               ],
             )
           ),
